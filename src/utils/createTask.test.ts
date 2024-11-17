@@ -26,7 +26,7 @@ describe('createTask', () => {
     const setTasks = jest.fn();
     jest.spyOn(Math, 'random').mockImplementation(() => 0.6);
 
-    await createTask(inputValue, setInputValue, error, setError, tasks, setTasks);
+    await createTask({ inputValue, setInputValue, error, setError, tasks, setTasks });
 
     expect(setTasks).toHaveBeenCalledTimes(1);
     expect(setTasks).toHaveBeenCalledWith([
@@ -55,13 +55,15 @@ describe('createTask', () => {
     expect.assertions(0);
 
     try {
-      await createTask(inputValue, setInputValue, initialError, setError, tasks, setTasks);
-    } catch (error) {
-      expect(error).toBeInstanceOf(Error);
-      expect(error.message).toBe('Something went wrong');
-      expect(setError).toHaveBeenCalledTimes(1);
-      expect(setError).toHaveBeenCalledWith(true);
-      expect(console.error).toHaveBeenCalledTimes(1);
+      await createTask({ inputValue, setInputValue, error: initialError, setError, tasks, setTasks });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        expect(error).toBeInstanceOf(Error);
+        expect(error.message).toBe('Something went wrong');
+        expect(setError).toHaveBeenCalledTimes(1);
+        expect(setError).toHaveBeenCalledWith(true);
+        expect(console.error).toHaveBeenCalledTimes(1);
+      }
     }
   });
 
@@ -73,7 +75,7 @@ describe('createTask', () => {
     const tasks: ITask[] = [];
     const setTasks = jest.fn();
 
-    await createTask(inputValue, setInputValue, error, setError, tasks, setTasks);
+    await createTask({ inputValue, setInputValue, error, setError, tasks, setTasks });
 
     expect(setTasks).not.toHaveBeenCalled();
     expect(setInputValue).not.toHaveBeenCalled();
