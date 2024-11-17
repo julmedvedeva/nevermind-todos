@@ -5,7 +5,8 @@ import Form from './components/form';
 import Task from './components/task';
 import { ITask } from './components/task/index.interface';
 import Title from './components/title';
-import { Button } from './components/button';
+import { Button } from './components/buttons/default';
+import { ClearButton } from './components/buttons/clear';
 
 function App() {
   const [tasks, setTasks] = useState<ITask[]>([]);
@@ -84,7 +85,6 @@ function App() {
       setTasks(JSON.parse(storedTasks));
     }
   }, []);
-
   return (
     <div className="app">
       {error === true && <h1>Something went wrong. Can you retry?</h1>}
@@ -96,11 +96,21 @@ function App() {
             <ul className="task-list">
               {filteredTasks.length > 0 &&
                 filteredTasks.map((task: ITask) => (
-                  <Task id={task.id} task={task.task} isCompleted={task.isCompleted} handleClick={handleClick} />
+                  <Task
+                    key={task.id}
+                    id={task.id}
+                    task={task.task}
+                    isCompleted={task.isCompleted}
+                    handleClick={handleClick}
+                  />
                 ))}
             </ul>
             <div className="navigation">
-              {tasks.length > 0 && <p>{` ${completedTasksCount} items left`}</p>}
+              {tasks.length > 0 && (
+                <div>
+                  <p>{` ${completedTasksCount} items left`}</p>
+                </div>
+              )}
               <div className="group">
                 <Button filter="all" isActive={activeFilter === 'all'} handleFilterChange={handleFilterChange}>
                   {library.btnAll}
@@ -117,9 +127,12 @@ function App() {
                 </Button>
               </div>
               <div className="clearing">
-                <button disabled={!filteredTasks.some((task) => task.isCompleted)} onClick={handleClearCompleted}>
-                  clear completed
-                </button>
+                <ClearButton
+                  handleClearCompleted={handleClearCompleted}
+                  isDisabled={!filteredTasks.some((task) => task.isCompleted)}
+                >
+                  {library.btnClear}
+                </ClearButton>
               </div>
             </div>
           </div>

@@ -19,7 +19,7 @@ li::before {
   height: 30px;
   border-radius: 50%;
   border: 1px solid #ccc;
-  background-color: #fff;
+  background-color: #fee4c4;
 }
 
 .checked::before {
@@ -32,10 +32,10 @@ li::before {
   height: 30px;
   border-radius: 50%;
   border: 1px solid #ccc;
-  background-color: #fff;
-  font-size: 16px;
-  color: #666;
-  content: '✔️';
+  background-color: #fee4c4;
+  font-size: 30px;
+  color: #be95be;
+  content: '+';
   text-align: center;
   line-height: 30px;
 }

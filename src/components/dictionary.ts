@@ -5,4 +5,5 @@ export const library: { [key: string]: string } = {
   btnAll: 'All',
   btnUncomplet: 'Active',
   btnComplet: 'Completed',
+  btnClear: 'Clear completed',
 };

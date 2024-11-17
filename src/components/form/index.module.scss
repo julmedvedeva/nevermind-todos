@@ -1,14 +1,33 @@
 .wrapper {
   background-color: #d7bc9b;
+  padding: 10px;
 }
 .form {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  align-items: baseline;
+  position: relative;
 }
 .input {
-  background-color: inherit;
+  background-color: #d7bc9b;
+  padding: 10px 0px 10px 40px;
+  width: 100%;
+  color: #be95be;
+  &::placeholder {
+    color: #be95be;
+  }
+  &:focus {
+    color: #be95be;
+    background-color: #fee4c4;
+    border-color: #fee4c4;
+    outline: none;
+  }
 }
+
 .button {
+  position: absolute;
   background-color: transparent;
   cursor: pointer;
+  top: 15px;
+  left: 0px;
 }
