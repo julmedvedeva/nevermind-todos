@@ -6,4 +6,6 @@ export const library: { [key: string]: string } = {
   btnUncomplet: 'Active',
   btnComplet: 'Completed',
   btnClear: 'Clear completed',
+  errorTitle: 'Something went wrong. Can you retry?',
+  sourceTitle: 'See code source',
 };

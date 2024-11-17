@@ -7,6 +7,7 @@ import { ITask } from './components/task/index.interface';
 import Title from './components/title';
 import { Button } from './components/buttons/default';
 import { ClearButton } from './components/buttons/clear';
+import { createTask } from './utils/createTask';
 
 function App() {
   const [tasks, setTasks] = useState<ITask[]>([]);
@@ -33,26 +34,10 @@ function App() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (inputValue.trim()) {
-      try {
-        const randomNumber = Math.random();
-        if (randomNumber < 0.5) {
-          setError(!error);
-          throw new Error('Something went wrong');
-        }
-
-        const createdTask: ITask = {
-          id: Date.now(),
-          task: inputValue,
-          isCompleted: false,
-        };
-        const newArr = [...tasks, createdTask];
-        setTasks(newArr);
-        setInputValue('');
-        localStorage.setItem('tasks', JSON.stringify(newArr));
-      } catch (error) {
-        console.error('Error creating task:', error);
-      }
+    try {
+      await createTask({ inputValue, setInputValue, error, setError, tasks, setTasks });
+    } catch (error) {
+      console.error('Error handling submit:', error);
     }
   };
 
@@ -85,9 +70,13 @@ function App() {
       setTasks(JSON.parse(storedTasks));
     }
   }, []);
+
   return (
     <div className="app">
-      {error === true && <h1>Something went wrong. Can you retry?</h1>}
+      <a target="_blank" className="sourcelink" href="https://github.com/julmedvedeva/nevermind-todos">
+        {library.sourceTitle}
+      </a>
+      {error === true && <h1>{library.errorTitle}</h1>}
       {error === false && (
         <>
           <Title title={library.title} />
@@ -108,7 +97,7 @@ function App() {
             <div className="navigation">
               {tasks.length > 0 && (
                 <div>
-                  <p>{` ${completedTasksCount} items left`}</p>
+                  <p>{`${completedTasksCount} items left`}</p>
                 </div>
               )}
               <div className="group">
